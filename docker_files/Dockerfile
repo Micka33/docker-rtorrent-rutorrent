@@ -112,16 +112,16 @@ RUN       chmod +x ./run
 # Gets ruTorrent
 WORKDIR     /usr/share/nginx/www/rutorrent
 RUN         (svn checkout http://rutorrent.googlecode.com/svn/trunk/ .) && \
-            (rm -rf .rutorrent/conf/)
+            (rm -rf .rutorrent/conf/) && (chown -R www-data:www-data .)
 ADD         ./rutorrent_conf/ /root/rutorrent/rutorrent/conf/
 
 
 ADD         .rtorrent.rc /root/.rtorrent.rc
 
 # Creates rtorrent as a service (using runit)
-WORKDIR     /etc/service/rtorrent
-ADD        ./run_rtorrent.sh /etc/service/rtorrent/run
-RUN        chmod +x ./run
+#WORKDIR     /etc/service/rtorrent
+#ADD        ./run_rtorrent.sh /etc/service/rtorrent/run
+#RUN        chmod +x ./run
 
 # Cleans up APT when done.
 RUN         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -50,7 +50,7 @@ port_range = 63256-63256
 # Start opening ports at a random position within the port range.
 #port_random = yes
 
-scgi_port = 127.0.0.1:5000
+scgi_port = 127.0.0.1:5050
 
 # Check hash for finished torrents. Might be usefull until the bug is
 # fixed that causes lack of diskspace not to be properly reported.

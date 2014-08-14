@@ -27,7 +27,7 @@
 	$topDirectory = '/';			// Upper available directory. Absolute path with trail slash.
 	$forbidUserSettings = false;
 
-	$scgi_port = 5000;
+	$scgi_port = 5050;
 	$scgi_host = "127.0.0.1";
 
 	// For web->rtorrent link through unix domain socket 
