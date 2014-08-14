@@ -1,0 +1,1 @@
+Put your rtorrent files here and rtorrent will automatically start to dowload them
