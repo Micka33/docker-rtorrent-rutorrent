@@ -1,4 +1,4 @@
-#docker-ruTorrent
+#docker-rtorrent-rutorrent
 
 a docker containing ruTorrent ready to use.
 
@@ -26,13 +26,13 @@ a docker containing ruTorrent ready to use.
 ## Install it
 
 ```bash
-git https://github.com/Micka33/docker-ruTorrent.git
-cd docker-ruTorrent
+git https://github.com/Micka33/docker-rtorrent-rutorrent.git
+cd docker-rtorrent-rutorrent
 sudo docker build -t rutorrent_image ./docker_files
 ```
 
 ## Run it
 
 ```bash
-sudo docker run --name rutorrent -d -p 80:80 -v `pwd`/mounted:/root/mounted rutorrent_image /sbin/my_init  -- bash -l
+sudo docker run --name rutorrent -d -p 80:80 -p 0.0.0.0:63256:63256 -v `pwd`/mounted:/root/mounted rutorrent_image
 ```

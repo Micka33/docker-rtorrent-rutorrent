@@ -6,7 +6,7 @@ CMD         ["/sbin/my_init"]
 
 
 RUN         apt-get -y update
-RUN         apt-get -y install curl gzip wget unzip libxml2 libxml2-dev libgd2-xpm-dev libgeoip-dev libperl-dev libxslt1-dev libxslt1.1 libssl-dev make g++ php5-fpm subversion
+RUN         apt-get -y install curl gzip wget unzip libxml2 libxml2-dev libgd2-xpm-dev libgeoip-dev libperl-dev libxslt1-dev libxslt1.1 libssl-dev make g++ php5-fpm subversion pkg-config libcppunit-dev libcurl4-openssl-dev libncurses-dev
 
 # Gets PCRE
 WORKDIR     /install
@@ -22,6 +22,8 @@ RUN         (wget http://zlib.net/zlib-1.2.8.tar.gz) && (tar -xzf zlib-1.2.8.tar
 WORKDIR     /install
 RUN         (wget http://nginx.org/download/nginx-1.6.1.tar.gz) && (tar -xzf nginx-1.6.1.tar.gz) && (rm nginx-1.6.1.tar.gz)
 WORKDIR     /install/nginx-1.6.1
+RUN         (sed -i "s/static char ngx_http_server_string\[\] = \"Server: nginx\" CRLF;/static char ngx_http_server_string\[\] = \"Server: Lol web server\" CRLF;/g" /install/nginx-1.6.1/src/http/ngx_http_header_filter_module.c) && \
+            (sed -i "s/static char ngx_http_server_full_string\[\] = \"Server: \" NGINX_VER CRLF;/static char ngx_http_server_full_string\[\] = \"Server: Lol web server\" CRLF;/g" /install/nginx-1.6.1/src/http/ngx_http_header_filter_module.c)
 RUN         mkdir -p /var/lib/nginx/body
 RUN         ./configure \
               --prefix=/usr/share/nginx  \
@@ -61,9 +63,32 @@ RUN         ./configure \
               --with-pcre=`pwd`/../pcre-8.35  \
               --with-zlib=`pwd`/../zlib-1.2.8  \
               --add-module=`pwd`/../ngx_devel_kit-0.2.19
+
 RUN           make
 RUN         sudo make install
 RUN         ln -s `pwd`/objs/nginx  /bin/nginx
+
+# Installs libtorrent
+WORKDIR     /rtorrent
+RUN         (wget http://libtorrent.rakshasa.no/downloads/libtorrent-0.13.4.tar.gz) && \
+            (tar -xzf libtorrent-0.13.4.tar.gz) && (rm libtorrent-0.13.4.tar.gz)
+WORKDIR     libtorrent-0.13.4
+RUN         (./configure) && (make) && (make install)
+
+# Installs xmlrpc
+WORKDIR     /rtorrent
+RUN         svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/stable xmlrpc-c
+WORKDIR     xmlrpc-c
+RUN         (./configure --disable-cplusplus) && (make) && (make install)
+
+# Installs rtorrent
+WORKDIR     /rtorrent
+RUN         (wget http://libtorrent.rakshasa.no/downloads/rtorrent-0.9.4.tar.gz) && \
+            (tar -xzf rtorrent-0.9.4.tar.gz) && (rm rtorrent-0.9.4.tar.gz)
+WORKDIR     rtorrent-0.9.4
+RUN         (./configure --with-xmlrpc-c) && (make) && (make install) && (ldconfig)
+
+
 
 
 # Creates nginx Service
@@ -90,6 +115,13 @@ RUN         (svn checkout http://rutorrent.googlecode.com/svn/trunk/ .) && \
             (rm -rf .rutorrent/conf/)
 ADD         ./rutorrent_conf/ /root/rutorrent/rutorrent/conf/
 
+
+ADD         .rtorrent.rc /root/.rtorrent.rc
+
+# Creates rtorrent as a service (using runit)
+WORKDIR     /etc/service/rtorrent
+ADD        ./run_rtorrent.sh /etc/service/rtorrent/run
+RUN        chmod +x ./run
 
 # Cleans up APT when done.
 RUN         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
