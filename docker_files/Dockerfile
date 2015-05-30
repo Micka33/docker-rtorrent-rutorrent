@@ -6,11 +6,11 @@ CMD         ["/sbin/my_init"]
 
 
 RUN         apt-get -y update
-RUN         apt-get -y install curl gzip wget unzip libxml2 libxml2-dev libgd2-xpm-dev libgeoip-dev libperl-dev libxslt1-dev libxslt1.1 libssl-dev make g++ php5-fpm subversion pkg-config libcppunit-dev libcurl4-openssl-dev libncurses-dev
+RUN         apt-get -y install curl automake libtool gzip wget unzip libxml2 libxml2-dev libgd2-xpm-dev libgeoip-dev libperl-dev libxslt1-dev libxslt1.1 libssl-dev make g++ php5-fpm subversion pkg-config libcppunit-dev libcurl4-openssl-dev libncurses-dev
 
 # Gets PCRE
 WORKDIR     /install
-RUN         (wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.35.tar.gz) && (tar -xzf pcre-8.35.tar.gz) && (rm pcre-8.35.tar.gz)
+RUN         (wget http://linux.stanford.edu/pub/exim/pcre/pcre-8.35.tar.gz) && (tar -xzf pcre-8.35.tar.gz) && (rm pcre-8.35.tar.gz)
 # Gets Nginx Developer Kit
 WORKDIR     /install
 RUN         (wget https://github.com/simpl/ngx_devel_kit/archive/v0.2.19.zip) && (unzip v0.2.19.zip) && (rm v0.2.19.zip)
@@ -70,7 +70,7 @@ RUN         ln -s `pwd`/objs/nginx  /bin/nginx
 
 # Installs libtorrent
 WORKDIR     /rtorrent
-RUN         (wget http://libtorrent.rakshasa.no/downloads/libtorrent-0.13.4.tar.gz) && \
+RUN         (wget -O libtorrent-0.13.4.tar.gz https://github.com/rakshasa/libtorrent/archive/0.13.4.tar.gz) && \
             (tar -xzf libtorrent-0.13.4.tar.gz) && (rm libtorrent-0.13.4.tar.gz)
 WORKDIR     libtorrent-0.13.4
 RUN         (./configure) && (make) && (make install)
@@ -83,7 +83,7 @@ RUN         (./configure --disable-cplusplus) && (make) && (make install)
 
 # Installs rtorrent
 WORKDIR     /rtorrent
-RUN         (wget http://libtorrent.rakshasa.no/downloads/rtorrent-0.9.4.tar.gz) && \
+RUN         (wget -O rtorrent-0.9.4.tar.gz https://github.com/rakshasa/rtorrent/archive/0.9.4.tar.gz) && \
             (tar -xzf rtorrent-0.9.4.tar.gz) && (rm rtorrent-0.9.4.tar.gz)
 WORKDIR     rtorrent-0.9.4
 RUN         (./configure --with-xmlrpc-c) && (make) && (make install) && (ldconfig)
