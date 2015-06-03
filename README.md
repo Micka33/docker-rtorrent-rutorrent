@@ -1,4 +1,4 @@
-#docker-rtorrent-rutorrent
+#docker-rtorrent-rutorrent [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Micka33/docker-rtorrent-rutorrent?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 a docker containing ruTorrent ready to use.
 
