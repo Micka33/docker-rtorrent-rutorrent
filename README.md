@@ -1,4 +1,4 @@
-#docker-rtorrent-rutorrent [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Micka33/docker-rtorrent-rutorrent?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+#docker-rtorrent-rutorrent
 
 [![Join the chat at https://gitter.im/Micka33/docker-rtorrent-rutorrent](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Micka33/docker-rtorrent-rutorrent?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
