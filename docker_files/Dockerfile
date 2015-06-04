@@ -20,10 +20,10 @@ RUN         (wget http://zlib.net/zlib-1.2.8.tar.gz) && (tar -xzf zlib-1.2.8.tar
 
 # Installs Nginx
 WORKDIR     /install
-RUN         (wget http://nginx.org/download/nginx-1.6.1.tar.gz) && (tar -xzf nginx-1.6.1.tar.gz) && (rm nginx-1.6.1.tar.gz)
-WORKDIR     /install/nginx-1.6.1
-RUN         (sed -i "s/static char ngx_http_server_string\[\] = \"Server: nginx\" CRLF;/static char ngx_http_server_string\[\] = \"Server: Lol web server\" CRLF;/g" /install/nginx-1.6.1/src/http/ngx_http_header_filter_module.c) && \
-            (sed -i "s/static char ngx_http_server_full_string\[\] = \"Server: \" NGINX_VER CRLF;/static char ngx_http_server_full_string\[\] = \"Server: Lol web server\" CRLF;/g" /install/nginx-1.6.1/src/http/ngx_http_header_filter_module.c)
+RUN         (wget http://nginx.org/download/nginx-1.8.0.tar.gz) && (tar -xzf nginx-1.8.0.tar.gz) && (rm nginx-1.8.0.tar.gz)
+WORKDIR     /install/nginx-1.8.0
+RUN         (sed -i "s/static char ngx_http_server_string\[\] = \"Server: nginx\" CRLF;/static char ngx_http_server_string\[\] = \"Server: Lol web server\" CRLF;/g" /install/nginx-1.8.0/src/http/ngx_http_header_filter_module.c) && \
+            (sed -i "s/static char ngx_http_server_full_string\[\] = \"Server: \" NGINX_VER CRLF;/static char ngx_http_server_full_string\[\] = \"Server: Lol web server\" CRLF;/g" /install/nginx-1.8.0/src/http/ngx_http_header_filter_module.c)
 RUN         mkdir -p /var/lib/nginx/body
 RUN         ./configure \
               --prefix=/usr/share/nginx  \
@@ -60,11 +60,11 @@ RUN         ./configure \
               --with-mail  \
               --with-mail_ssl_module  \
               --with-http_spdy_module  \
-              --with-pcre=`pwd`/../pcre-8.35  \
+              --with-pcre=`pwd`/../pcre-8.36  \
               --with-zlib=`pwd`/../zlib-1.2.8  \
               --add-module=`pwd`/../ngx_devel_kit-0.2.19
 
-RUN           make
+RUN         make
 RUN         sudo make install
 RUN         ln -s `pwd`/objs/nginx  /bin/nginx
 
