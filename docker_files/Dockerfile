@@ -119,9 +119,9 @@ ADD         ./rutorrent_conf/ /root/rutorrent/rutorrent/conf/
 ADD         .rtorrent.rc /root/.rtorrent.rc
 
 # Creates rtorrent as a service (using runit)
-#WORKDIR     /etc/service/rtorrent
-#ADD        ./run_rtorrent.sh /etc/service/rtorrent/run
-#RUN        chmod +x ./run
+WORKDIR     /etc/service/rtorrent
+ADD        ./run_rtorrent.sh /etc/service/rtorrent/run
+RUN        chmod +x ./run
 
 # Cleans up APT when done.
 RUN         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
