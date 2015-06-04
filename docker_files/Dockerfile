@@ -73,7 +73,7 @@ WORKDIR     /rtorrent
 RUN         (wget -O libtorrent-0.13.4.tar.gz https://github.com/rakshasa/libtorrent/archive/0.13.4.tar.gz) && \
             (tar -xzf libtorrent-0.13.4.tar.gz) && (rm libtorrent-0.13.4.tar.gz)
 WORKDIR     libtorrent-0.13.4
-RUN         (./configure) && (make) && (make install)
+RUN         (sh autogen.sh) && (./configure) && (make) && (make install)
 
 # Installs xmlrpc
 WORKDIR     /rtorrent
@@ -86,7 +86,7 @@ WORKDIR     /rtorrent
 RUN         (wget -O rtorrent-0.9.4.tar.gz https://github.com/rakshasa/rtorrent/archive/0.9.4.tar.gz) && \
             (tar -xzf rtorrent-0.9.4.tar.gz) && (rm rtorrent-0.9.4.tar.gz)
 WORKDIR     rtorrent-0.9.4
-RUN         (./configure --with-xmlrpc-c) && (make) && (make install) && (ldconfig)
+RUN         (sh autogen.sh) && (./configure --with-xmlrpc-c) && (make) && (make install) && (ldconfig)
 
 
 
