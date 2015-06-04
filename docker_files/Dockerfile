@@ -6,7 +6,7 @@ CMD         ["/sbin/my_init"]
 
 
 RUN         apt-get -y update
-RUN         apt-get -y install curl automake libtool gzip wget unzip libxml2 libxml2-dev libgd2-xpm-dev libgeoip-dev libperl-dev libxslt1-dev libxslt1.1 libssl-dev make g++ php5-fpm subversion pkg-config libcppunit-dev libcurl4-openssl-dev libncurses-dev
+RUN         apt-get -y install automake libtool curl gzip wget unzip libxml2 libxml2-dev libgd2-xpm-dev libgeoip-dev libperl-dev libxslt1-dev libxslt1.1 libssl-dev make g++ php5-fpm subversion pkg-config libcppunit-dev libcurl4-openssl-dev libncurses-dev
 
 # Gets PCRE
 WORKDIR     /install
