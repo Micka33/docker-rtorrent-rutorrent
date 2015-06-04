@@ -10,7 +10,7 @@ RUN         apt-get -y install automake libtool curl gzip wget unzip libxml2 lib
 
 # Gets PCRE
 WORKDIR     /install
-RUN         (wget http://linux.stanford.edu/pub/exim/pcre/pcre-8.35.tar.gz) && (tar -xzf pcre-8.35.tar.gz) && (rm pcre-8.35.tar.gz)
+RUN         (wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.36.tar.bz2) && (tar -xjf pcre-8.36.tar.bz2) && (rm pcre-8.36.tar.bz2)
 # Gets Nginx Developer Kit
 WORKDIR     /install
 RUN         (wget https://github.com/simpl/ngx_devel_kit/archive/v0.2.19.zip) && (unzip v0.2.19.zip) && (rm v0.2.19.zip)
