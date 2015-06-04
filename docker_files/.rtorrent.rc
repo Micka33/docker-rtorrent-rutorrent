@@ -50,7 +50,7 @@ port_range = 63256-63256
 # Start opening ports at a random position within the port range.
 #port_random = yes
 
-scgi_port = 0.0.0.0:5050
+scgi_port = 127.0.0.1:5050
 
 # Check hash for finished torrents. Might be usefull until the bug is
 # fixed that causes lack of diskspace not to be properly reported.
@@ -74,11 +74,11 @@ encryption = allow_incoming,enable_retry,prefer_plaintext
 # The default is "off". For DHT to work, a session directory must be defined.
 #
 dht = disable
- 
+
 # UDP port to use for DHT.
 #
 # dht_port = 6881
- 
+
 # Enable peer exchange (for torrents not marked private)
 #
 peer_exchange = no
