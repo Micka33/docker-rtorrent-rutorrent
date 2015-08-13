@@ -104,9 +104,9 @@ RUN         (sed -i "s/cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/ph
             (sed -i "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php5-fpm.sock/g" /etc/php5/fpm/pool.d/www.conf)
 
 # Creates fpm Service
-WORKDIR   /etc/service/fpm
-ADD       ./run_fpm.sh /etc/service/fpm/run
-RUN       chmod +x ./run
+WORKDIR     /etc/service/fpm
+ADD         ./run_fpm.sh /etc/service/fpm/run
+RUN         chmod +x ./run
 
 
 # Gets ruTorrent
@@ -120,8 +120,8 @@ ADD         .rtorrent.rc /root/.rtorrent.rc
 
 # Creates rtorrent as a service (using runit)
 WORKDIR     /etc/service/rtorrent
-ADD        ./run_rtorrent.sh /etc/service/rtorrent/run
-RUN        chmod +x ./run
+ADD         ./run_rtorrent.sh /etc/service/rtorrent/run
+RUN         chmod +x ./run
 
 # Cleans up APT when done.
 RUN         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
