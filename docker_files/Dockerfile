@@ -76,10 +76,12 @@ WORKDIR     libtorrent-0.13.4
 RUN         (sh autogen.sh) && (./configure) && (make) && (make install)
 
 # Installs xmlrpc
-WORKDIR     /rtorrent
-RUN         svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/stable xmlrpc-c
-WORKDIR     xmlrpc-c
-RUN         (./configure --disable-cplusplus) && (make) && (make install)
+# WORKDIR     /rtorrent
+# RUN         svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/stable xmlrpc-c
+# WORKDIR     xmlrpc-c
+# RUN         (./configure --disable-cplusplus --enable-libxml2-backend) && (make) && (make install)
+RUN         apt-get -y install libxmlrpc-core-c3 libxmlrpc-core-c3-dev
+
 
 # Installs rtorrent
 WORKDIR     /rtorrent
