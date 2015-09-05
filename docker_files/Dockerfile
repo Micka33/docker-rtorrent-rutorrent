@@ -123,6 +123,7 @@ RUN         chmod +x ./run
 WORKDIR     /var/www
 RUN         (svn checkout http://rutorrent.googlecode.com/svn/trunk/ .) && \
             (rm -rf .rutorrent/conf/) && \
+            # http://stackoverflow.com/questions/8751221/php-timezone-database-is-corrupt-error
             (mkdir -p rutorrent/usr/share/zoneinfo) && \
             (cp -rf /usr/share/zoneinfo/* rutorrent/usr/share/zoneinfo/) && \
             (chown -R www-data:www-data ../www) && (chmod -R 755 ../www)
