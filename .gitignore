@@ -1,0 +1,4 @@
+mounted/**/*torrent*
+mounted/**/*iso*
+mounted/**/*meta*
+.DS_Store
