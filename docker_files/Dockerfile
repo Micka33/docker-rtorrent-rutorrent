@@ -76,10 +76,6 @@ WORKDIR     libtorrent-0.13.4
 RUN         (sh autogen.sh) && (./configure) && (make) && (make install)
 
 # Installs xmlrpc
-# WORKDIR     /rtorrent
-# RUN         svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/stable xmlrpc-c
-# WORKDIR     xmlrpc-c
-# RUN         (./configure --disable-cplusplus --enable-libxml2-backend) && (make) && (make install)
 RUN         apt-get -y install libxmlrpc-core-c3 libxmlrpc-core-c3-dev
 
 
@@ -113,7 +109,6 @@ RUN         (sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/p
             (sed -i "s/;catch_workers_output = yes/catch_workers_output = yes/" /etc/php5/fpm/pool.d/www.conf) && \
             (sed -i "s/;daemonize = yes/;daemonize = no/g" /etc/php5/fpm/php-fpm.conf) && \
             (sed -i "s/;include=\/etc\/php5\/fpm\/*.conf/include=\/etc\/php5\/fpm\/pool.d\/*.conf/g" /etc/php5/fpm/php-fpm.conf) && \
-            # (sed -i "s/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9999/g" /etc/php5/fpm/pool.d/www.conf) && \
             (sed -i "s/;chroot =/chroot = \/var\/www\/rutorrent/g" /etc/php5/fpm/pool.d/www.conf)
 
 
