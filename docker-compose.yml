@@ -1,0 +1,8 @@
+torrent:
+  build: ./docker_files
+  container_name: torrent
+  # command: /sbin/my_init -- /bin/bash # uncomment for testing
+  volumes:
+    - ./mounted:/root/mounted
+  ports:
+    - "127.0.0.1:80:80"
