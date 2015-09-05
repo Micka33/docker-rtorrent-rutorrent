@@ -101,7 +101,7 @@ ADD         ./nginx.conf /etc/nginx/nginx.conf
 ADD         ./run_nginx.sh /etc/service/nginx/run
 RUN         chmod +x ./run
 #we're not displaying our nginx version to the world
-RUN         (sed -i "s/nginx\/$nginx_version/web\/lol/g" /etc/nginx/fastcgi.conf)
+RUN         (sed -i "s/fastcgi_param  SERVER_SOFTWARE    nginx\/\$nginx_version;/fastcgi_param  SERVER_SOFTWARE    web\/lol;/g" /etc/nginx/fastcgi.conf)
 
 # Configures fpm
 RUN          apt-get -y install php5-common php5-cli
