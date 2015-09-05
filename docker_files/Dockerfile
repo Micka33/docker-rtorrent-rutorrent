@@ -91,6 +91,12 @@ WORKDIR     rtorrent-0.9.4
 RUN         (sh autogen.sh) && (./configure --with-xmlrpc-c) && (make) && (make install) && (ldconfig)
 
 
+# DEV ONLY
+WORKDIR   /
+RUN       (wget http://curl.haxx.se/download/curl-7.44.0.tar.gz) && \
+          (tar -xzf curl-7.44.0.tar.gz) && (rm curl-7.44.0.tar.gz)
+WORKDIR   curl-7.44.0
+RUN       ./configure && make && make install
 
 
 # Creates nginx Service
@@ -102,8 +108,15 @@ RUN         chmod +x ./run
 RUN         (sed -i "s/nginx\/$nginx_version/web\/lol/g" /etc/nginx/fastcgi.conf)
 
 # Configures fpm
-RUN         (sed -i "s/cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini) && \
-            (sed -i "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php5-fpm.sock/g" /etc/php5/fpm/pool.d/www.conf)
+RUN          apt-get -y install php5-common php5-cli
+RUN         (sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini) && \
+            (sed -i "s/;catch_workers_output = yes/catch_workers_output = yes/" /etc/php5/fpm/pool.d/www.conf) && \
+            (sed -i "s/;daemonize = yes/;daemonize = no/g" /etc/php5/fpm/php-fpm.conf) && \
+            (sed -i "s/;include=\/etc\/php5\/fpm\/*.conf/include=\/etc\/php5\/fpm\/pool.d\/*.conf/g" /etc/php5/fpm/php-fpm.conf) && \
+            # (sed -i "s/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9999/g" /etc/php5/fpm/pool.d/www.conf) && \
+            (sed -i "s/;chroot =/chroot = \/var\/www\/rutorrent/g" /etc/php5/fpm/pool.d/www.conf)
+
+
 
 # Creates fpm Service
 WORKDIR     /etc/service/fpm
@@ -112,18 +125,18 @@ RUN         chmod +x ./run
 
 
 # Gets ruTorrent
-WORKDIR     /usr/share/nginx/www/rutorrent
+WORKDIR     /var/www
 RUN         (svn checkout http://rutorrent.googlecode.com/svn/trunk/ .) && \
-            (rm -rf .rutorrent/conf/) && (chown -R www-data:www-data .)
-ADD         ./rutorrent_conf/ /root/rutorrent/rutorrent/conf/
+            (rm -rf .rutorrent/conf/) && (chown -R www-data:www-data ../www) && (chmod -R 755 ../www)
+ADD         ./rutorrent_conf/ /var/www/rutorrent/conf/
 
 
 ADD         .rtorrent.rc /root/.rtorrent.rc
 
 # Creates rtorrent as a service (using runit)
-WORKDIR     /etc/service/rtorrent
-ADD         ./run_rtorrent.sh /etc/service/rtorrent/run
-RUN         chmod +x ./run
+# WORKDIR     /etc/service/rtorrent
+# ADD         ./run_rtorrent.sh /etc/service/rtorrent/run
+# RUN         chmod +x ./run
 
 # Cleans up APT when done.
 RUN         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
