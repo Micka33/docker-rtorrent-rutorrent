@@ -57,7 +57,7 @@ scgi_port = 127.0.0.1:5050
 check_hash = yes
 
 # Set whetever the client should try to connect to UDP trackers.
-#use_udp_trackers = no
+use_udp_trackers = yes
 
 # Encryption options, set to none (default) or any combination of the following:
 # allow_incoming, try_outgoing, require, require_RC4, enable_retry, prefer_plaintext
