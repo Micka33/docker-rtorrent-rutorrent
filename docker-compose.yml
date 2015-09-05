@@ -1,7 +1,7 @@
 torrent:
   build: ./docker_files
   container_name: torrent
-  # command: /sbin/my_init -- /bin/bash # uncomment for testing
+  command: /sbin/my_init
   volumes:
     - ./mounted:/root/mounted
   ports:
