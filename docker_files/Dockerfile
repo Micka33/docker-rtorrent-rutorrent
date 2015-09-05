@@ -122,7 +122,10 @@ RUN         chmod +x ./run
 # Gets ruTorrent
 WORKDIR     /var/www
 RUN         (svn checkout http://rutorrent.googlecode.com/svn/trunk/ .) && \
-            (rm -rf .rutorrent/conf/) && (chown -R www-data:www-data ../www) && (chmod -R 755 ../www)
+            (rm -rf .rutorrent/conf/) && \
+            (mkdir -p rutorrent/usr/share/zoneinfo) && \
+            (cp -rf /usr/share/zoneinfo/* rutorrent/usr/share/zoneinfo/) && \
+            (chown -R www-data:www-data ../www) && (chmod -R 755 ../www)
 ADD         ./rutorrent_conf/ /var/www/rutorrent/conf/
 
 
