@@ -38,7 +38,7 @@ sudo docker build -t rutorrent_image ./docker_files
 ```bash
 docker run --name rutorrent -d -p 80:80 -p 0.0.0.0:63256:63256 -v `pwd`/mounted:/root/mounted rutorrent_image
 OR
-docker-compose run --service-ports -d torrent
+docker-compose run --service-ports --rm torrent
 ```
 
 ## Debug it
