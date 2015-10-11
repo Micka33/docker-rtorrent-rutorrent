@@ -28,7 +28,7 @@ a docker containing ruTorrent ready to use.
 ## Install it
 
 ```bash
-git https://github.com/Micka33/docker-rtorrent-rutorrent.git
+git clone https://github.com/Micka33/docker-rtorrent-rutorrent.git
 cd docker-rtorrent-rutorrent
 sudo docker build -t rutorrent_image ./docker_files
 ```
